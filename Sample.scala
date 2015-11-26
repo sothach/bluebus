@@ -1,6 +1,6 @@
 object Sample {
 
-  val inboundBus = SBBusConfig(
+  val inboundBus = SBusConfig(
     rootUri=".servicebus.windows.net", 
     namespace="yourServiceNamspace",
     tokenLease=Duration.ofMinutes(5), 
