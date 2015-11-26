@@ -6,7 +6,7 @@ object Sample {
     tokenLease=Duration.ofMinutes(5), 
     timeout=Duration.ofSeconds(30),
     queueName="queueName",
-    sasKeyname="RootManageSharedAccessKey, 
+    sasKeyname="RootManageSharedAccessKey", 
     sasKey="yourKey")
     
   val incomingService = new ServiceBusClient(FDSConfig.inboundBus)
