@@ -6,6 +6,9 @@ import javax.xml.bind.DatatypeConverter
 
 import java.time.Duration
 
+/** Shared Access Signature (SAS) to authenticate Service Bus clients, generated from the 
+  * HMAC-SHA256 of a resource string, consisting of the URI of the resource that is accessed 
+  * and an expiry timestamp, with the cryptographic key */
 object SASAuthFactory {
   
   def createToken(targetUri: String, key: String, value: String, timeout: Duration) = {
