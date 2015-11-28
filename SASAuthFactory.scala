@@ -19,7 +19,7 @@ object SASAuthFactory {
       DatatypeConverter.printBase64Binary(hmacbytes)
     }
 
-    val encodedUri = URLEncoder.encode(targetUri.toLowerCase(), utf8).toLowerCase
+    val encodedUri = URLEncoder.encode(targetUri.toLowerCase(), utf8)
     val expiration = Math.round(new Date(System.currentTimeMillis() + timeout.toMillis).getTime / 1000)
     val hmac = URLEncoder.encode(calculateHmac(s"$encodedUri\n$expiration"), utf8)
 
