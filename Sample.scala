@@ -15,7 +15,7 @@ object Sample extends App {
   def receiveMessages(): Unit =
     incomingService.receive map { message =>
         handler(message)
-        receiveMessages(handler)
+        receiveMessages()
     }
   
   receiveMessages()
