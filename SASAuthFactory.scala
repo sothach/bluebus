@@ -21,8 +21,7 @@ object SASAuthFactory {
 
     val encodedUri = URLEncoder.encode(targetUri.toLowerCase(), utf8).toLowerCase
     val expiration = Math.round(new Date(System.currentTimeMillis() + timeout.toMillis).getTime / 1000)
-    val signature = s"$encodedUri\n$expiration"
-    val hmac = URLEncoder.encode(calculateHmac(signature), utf8)
+    val hmac = URLEncoder.encode(calculateHmac(s"$encodedUri\n$expiration"), utf8)
 
     s"SharedAccessSignature sig=$hmac&se=$expiration&skn=$key&sr=$encodedUri"
   }
