@@ -1,25 +1,20 @@
 object Sample {
 
-  val inboundBus = SBusConfig(
+  val busConfig = SBusConfig(
     rootUri=".servicebus.windows.net", 
     namespace="yourServiceNamspace",
-    tokenLease=Duration.ofMinutes(5), 
-    timeout=Duration.ofSeconds(30),
     queueName="queueName",
-    sasKeyname="RootManageSharedAccessKey", 
-    sasKey="yourKey")
+    sasKeyName="RootManageSharedAccessKey", 
+    sasKey="yourKey=")
     
-  val incomingService = new ServiceBusClient(FDSConfig.inboundBus)
+  val incomingService = new ServiceBusClient(busConfig)
     
-  def receiveMessages(client: ServiceBusClient, handler: (String) => Unit): Unit = {
-    client.receive onComplete {
-      case Success(message) =>
-        receive(message)
+  /** recursively receive & handle messages from endpoint until no more available */  
+  def receiveMessages(handler: (String) => Unit): Unit =
+    incomingService.receive map { message =>
+        handler(message)
         receiveMessages(client, handler)
-      case Failure(t) =>
-        Logger.warn(s"SB receive error: ${t.getMessage}")
     }
-  }
   
-  def test = receiveMessages(incomingService, (msg: String) => println(msg))
+  receiveMessages(incomingService, (msg: String) => println(msg))
 }
