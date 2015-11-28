@@ -7,21 +7,19 @@ import javax.xml.bind.DatatypeConverter
 import java.time.Duration
 
 object SASAuthFactory {
-  val HMAC_SHA256_ALG = "HmacSHA256"
-  val utf8 = "UTF-8"
-
+  
   def createToken(targetUri: String, key: String, value: String, timeout: Duration) = {
     def calculateHmac(data: String) = {
-      val key = new SecretKeySpec(value.getBytes(), HMAC_SHA256_ALG)
+      val key = new SecretKeySpec(value.getBytes(), "HmacSHA256")
       val mac = Mac.getInstance(key.getAlgorithm)
       mac.init(key)
       val hmacbytes = mac.doFinal(data.getBytes())
       DatatypeConverter.printBase64Binary(hmacbytes)
     }
 
-    val encodedUri = URLEncoder.encode(targetUri.toLowerCase(), utf8)
+    val encodedUri = URLEncoder.encode(targetUri.toLowerCase(), "UTF-8")
     val expiration = Math.round(new Date(System.currentTimeMillis() + timeout.toMillis).getTime / 1000)
-    val hmac = URLEncoder.encode(calculateHmac(s"$encodedUri\n$expiration"), utf8)
+    val hmac = URLEncoder.encode(calculateHmac(s"$encodedUri\n$expiration"), "UTF-8")
 
     s"SharedAccessSignature sig=$hmac&se=$expiration&skn=$key&sr=$encodedUri"
   }
