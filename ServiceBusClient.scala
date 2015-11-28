@@ -29,9 +29,7 @@ class ServiceBusClient(config: SBBusConfig) {
   def shutdown() = Http.shutdown()
 
   private implicit class Request(req: Req) {
-    def timeout = {
-      req.setParameters(Map("timeout" -> Seq(config.timeout.getSeconds.toString)))
-      req
-    }
+    def timeout = req.setParameters(Map(
+      "timeout" -> Seq(config.timeout.getSeconds.toString)))
   }
 }
