@@ -2,7 +2,7 @@ import dispatch.{Req, Http, as, url}
 import scala.concurrent.ExecutionContext.Implicits.global
 import java.time.Duration
 
-class ServiceBusClient(config: SBBusConfig) {
+class ServiceBusClient(config: SBusConfig) {
 
   def readHeaders = Map(
     "Authorization" -> config.sasToken,
