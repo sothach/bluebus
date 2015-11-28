@@ -9,7 +9,7 @@ object Sample extends App {
     
   val incomingService = new ServiceBusClient(busConfig)
   
-  def handler = println  
+  def handler(p: String) = println
   
   /** continually receive & handle messages from endpoint, until no more available */  
   def receiveMessages(): Unit =
