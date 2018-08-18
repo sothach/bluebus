@@ -1,21 +1,32 @@
-import dispatch.{Req, Http, as, url}
+package bluebus.client
+
+import bluebus.configuration.SBusConfig
+import dispatch.{Http, Req, as, url}
+
 import scala.concurrent.ExecutionContext.Implicits.global
-import java.time.Duration
 
 class ServiceBusClient(config: SBusConfig) {
-
+  val http = Http.default
   def readHeaders = Map(
     "Authorization" -> config.sasToken,
     "Accept" -> config.contentType)
+println(s"url=[${config.endpoint}/head]")
+  val headRequest = {
+    val req = (url(config.endpoint) / "head").timeout
+    config.isSecure match {
+      case true =>
+        req.secure
+      case false =>
+        req
+    }
+  }
 
   def peek = {
-    val req = (url(config.endpoint) / "head").timeout.secure
-    Http(req.POST <:< readHeaders << "" OK as.String)
+    http(headRequest.POST <:< readHeaders << "" OK as.String)
   }
 
   def receive = {
-    val req = (url(config.endpoint) / "head").timeout.secure
-    Http(req.DELETE <:< readHeaders << "" OK as.String)
+    http(headRequest.DELETE <:< readHeaders << "" OK as.String)
   }
 
   def send(message: String, messageId: String) = {
@@ -23,10 +34,10 @@ class ServiceBusClient(config: SBusConfig) {
       "MessageId" -> messageId,
       "Authorization" -> config.sasToken,
       "Content-Type" -> config.contentType)
-    Http(url(config.endpoint).secure.POST <:< headers << message OK as.String)
+    http(headRequest.POST <:< headers << message OK as.String)
   }
 
-  def shutdown() = Http.shutdown()
+  def shutdown() = http.shutdown()
 
   private implicit class Request(req: Req) {
     def timeout = req.setParameters(Map(
