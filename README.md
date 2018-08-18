@@ -1,7 +1,7 @@
 # Azure ServiceBus Client
+### Status
+[![Build Status](https://travis-ci.org/sothach/bluebus.png)](https://travis-ci.org/sothach/bluebus)
 [![Coverage Status](https://coveralls.io/repos/github/sothach/bluebus/badge.svg?branch=master)](https://coveralls.io/github/sothach/bluebus?branch=master)
-
-[![License](https://licensebuttons.net/l/by/3.0/88x31.png)](https://creativecommons.org/licenses/by/4.0/) 
 
 ## Scala client for Azure ServiceBus
 
@@ -97,6 +97,7 @@ To create the report, rom the command line:
 * [Roy Phillips](mailto:phillips.roy@gmail.com)
 
 ## License
+[![License](https://licensebuttons.net/l/by/3.0/88x31.png)](https://creativecommons.org/licenses/by/4.0/) 
 (c) 2018 This project is licensed under Creative Commons License
 
 [Attribution 4.0 International (CC BY 4.0)](file:LICENSE.md)
