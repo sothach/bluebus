@@ -16,23 +16,58 @@ class SBClientSpec extends FlatSpec with Matchers with ScalaFutures with Mockito
   implicit val ec = ExecutionContext.fromExecutor(Executors.newFixedThreadPool(10))
   var testSubject: Option[ServiceBusClient] = None
 
-  "when called" should "work" in {
+  /*
+      200	Message successfully deleted.
+      401	Authorization failure.
+      404	No message was found with the specified MessageId or LockToken.
+      410	Specified queue or subscription does not exist.
+      500	Internal error.
+   */
+
+  "when message is posted to the queue, the client" should "deliver the message" in {
     val payload = """{"key":"value}"""
+    val messageId = "db6676d9-8f7a-4bae-b036-b030e30b9e3d"
+    testSubject.isDefined shouldBe true
+    val subject = testSubject.get
+    val waiter = new Waiter
+    resetJadler()
+
+    onRequest()
+      .havingMethodEqualTo("POST")
+      .havingPathEqualTo("/queueName/messages")
+      .respond().withStatus(201)
+      .withHeader("Server", "Microsoft-HTTPAPI/2.0")
+      .withHeader("Strict-Transport-Security", "max-age=31536000")
+      .withHeader("Date", "Wed, 29 Nov 2017 13:40:56 GMT")
+      .withHeader("BrokerProperties", brokerProperties)
+
+    subject.send(payload,messageId) map { m =>
+      println(s"message=$m")
+      waiter.dismiss
+    }
+
+    waiter.await(timeout(2 seconds), dismissals(1))
+    verifyThatRequest().receivedOnce()
+  }
+
+  "when queue is read, the client" should "receive the next message" in {
+    testSubject.isDefined shouldBe true
+    val subject = testSubject.get
+    val waiter = new Waiter
+    val payload = """{"key":"value}"""
+    resetJadler()
+
     onRequest()
       .havingMethodEqualTo("DELETE")
       .havingPathEqualTo("/queueName/messages/head")
       .respond().withBody(payload).withStatus(200)
       .thenRespond().withStatus(204)
 
-    val waiter = new Waiter
-
     val handler = (m: String) => {
       println(s"message=$m")
       m shouldBe payload
       waiter.dismiss
     }
-    testSubject.isDefined shouldBe true
-    val subject = testSubject.get
 
     def receiveMessages(f: String => Unit): Unit =
       subject.receive map { message =>
@@ -41,13 +76,43 @@ class SBClientSpec extends FlatSpec with Matchers with ScalaFutures with Mockito
       }
 
     receiveMessages(handler)
+
     waiter.await(timeout(2 seconds), dismissals(1))
   }
 
-  override def beforeAll = {
-    initJadler()
-    testSubject = initializeClient
+  "when queue is peeked, the client" should "receive the next message" in {
+    testSubject.isDefined shouldBe true
+    val subject = testSubject.get
+    val waiter = new Waiter
+    val payload = """{"key":"value}"""
+    resetJadler()
+
+    onRequest()
+      .havingMethodEqualTo("POST")
+      .havingPathEqualTo("/queueName/messages/head")
+      .respond().withBody(payload).withStatus(200)
+      .thenRespond().withStatus(204)
+
+    subject.peek map { message =>
+      println(s"message=$message")
+      message shouldBe payload
+      waiter.dismiss
+    }
+
+    waiter.await(timeout(2 seconds), dismissals(1))
   }
+
+  val brokerProperties = """{
+          "DeliveryCount" : 1,
+          "EnqueuedSequenceNumber" : 0,
+          "EnqueuedTimeUtc" : "Wed, 29 Nov 2017 13:37:27 GMT",
+          "MessageId" : "cc046373b5c845639490018c995bf6fd",
+          "PartitionKey" : "169",
+          "SequenceNumber" : 61643019979786635,
+          "State" : "Active",
+          "TimeToLive" : 1209600
+        }"""
+
   def initializeClient = {
     val config = SBusConfig(
       rootUri=URI.create(s"http://localhost:$port"),
@@ -56,8 +121,15 @@ class SBClientSpec extends FlatSpec with Matchers with ScalaFutures with Mockito
       sasKey="sasKey")
     Some(new ServiceBusClient(config))
   }
-  override def afterAll = {
+
+  override def beforeAll = {
+    initJadler()
+    testSubject = initializeClient
+  }
+
+  override def afterAll {
     testSubject.foreach(_.shutdown())
+    testSubject = None
     closeJadler()
   }
 }

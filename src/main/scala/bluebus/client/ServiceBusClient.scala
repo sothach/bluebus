@@ -10,9 +10,9 @@ class ServiceBusClient(config: SBusConfig) {
   def readHeaders = Map(
     "Authorization" -> config.sasToken,
     "Accept" -> config.contentType)
-println(s"url=[${config.endpoint}/head]")
-  val headRequest = {
-    val req = (url(config.endpoint) / "head").timeout
+
+  val request = (endpoint: String) => {
+    val req = url(endpoint).timeout
     config.isSecure match {
       case true =>
         req.secure
@@ -21,20 +21,16 @@ println(s"url=[${config.endpoint}/head]")
     }
   }
 
-  def peek = {
-    http(headRequest.POST <:< readHeaders << "" OK as.String)
-  }
+  def peek = http(request(s"${config.endpoint}/head").POST <:< readHeaders << "" OK as.String)
 
-  def receive = {
-    http(headRequest.DELETE <:< readHeaders << "" OK as.String)
-  }
+  def receive = http(request(s"${config.endpoint}/head").DELETE <:< readHeaders << "" OK as.String)
 
   def send(message: String, messageId: String) = {
     val headers = Map(
       "MessageId" -> messageId,
       "Authorization" -> config.sasToken,
       "Content-Type" -> config.contentType)
-    http(headRequest.POST <:< headers << message OK as.String)
+    http(request(config.endpoint) <:< headers << message OK as.String)
   }
 
   def shutdown() = http.shutdown()
