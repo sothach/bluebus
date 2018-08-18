@@ -1,7 +1,8 @@
 # Azure ServiceBus Client
 ### Status
 [![Build Status](https://travis-ci.org/sothach/bluebus.png)](https://travis-ci.org/sothach/bluebus)
-[![Coverage Status](https://coveralls.io/repos/github/sothach/bluebus/badge.svg?branch=master)](https://coveralls.io/github/sothach/bluebus?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/sothach/bluebus/badge.svg
+)](https://coveralls.io/github/sothach/bluebus)
 
 ## Scala client for Azure ServiceBus
 
