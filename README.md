@@ -2,6 +2,8 @@
 ### Status
 [![Build Status](https://travis-ci.org/sothach/bluebus.png)](https://travis-ci.org/sothach/bluebus)
 [![Coverage Status](https://coveralls.io/repos/github/sothach/bluebus/badge.svg?branch=master)](https://coveralls.io/github/sothach/bluebus?branch=master)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/43c7ee162cb2444686e441d364971e0d)](https://www.codacy.com/project/sothach/bluebus/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=sothach/bluebus&amp;utm_campaign=Badge_Grade_Dashboard)
+
 ## Scala client for Azure ServiceBus
 
 These classes are an alternative to using the official Microsoft Azure ServiceBus library (Java)
