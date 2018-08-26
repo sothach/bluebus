@@ -1,13 +1,14 @@
 package configuration
 
-object SBConfig {
+import bluebus.configuration.SBusConfig
 
+object SBConfig {
   val config = Map[String,String](
-    "root-uri" -> "127.0.0.1",
-    "read.timeout" -> "PT30S",
-    "token.ttl" -> "PT5M",
-    "queue-name" -> "test",
-    "sas-key-name" -> "sbuser",
-    "sas-key" -> "12345")
+    SBusConfig.RootUri     -> "http://127.0.0.1",
+    SBusConfig.ReadTimeout -> "PT30S",
+    SBusConfig.TokenTTL    -> "PT5M",
+    SBusConfig.QueueName   -> "test",
+    SBusConfig.SasKeyName  -> "sbuser",
+    SBusConfig.SasKey      -> "12345")
 
 }

@@ -1,4 +1,4 @@
-import java.net.URI
+import java.net.URL
 import java.util.concurrent.Executors
 
 import bluebus.client.ServiceBusClient
@@ -115,7 +115,7 @@ class SBClientSpec extends FlatSpec with Matchers with ScalaFutures with Mockito
 
   def initializeClient = {
     val config = SBusConfig(
-      rootUri=URI.create(s"http://localhost:$port"),
+      rootUri=new URL(s"http://localhost:$port"),
       queueName="queueName",
       sasKeyName="RootManageSharedAccessKey",
       sasKey="sasKey")

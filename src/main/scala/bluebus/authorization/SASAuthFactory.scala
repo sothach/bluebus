@@ -13,12 +13,12 @@ import javax.xml.bind.DatatypeConverter
 object SASAuthFactory {
 
   def createToken(targetUri: String, key: String, value: String, timeout: Duration) = {
-    def calculateHmac(data: String) = {
+    val calculateHmac = (data: String) => {
       val key = new SecretKeySpec(value.getBytes(), "HmacSHA256")
       val mac = Mac.getInstance(key.getAlgorithm)
       mac.init(key)
-      val hmacbytes = mac.doFinal(data.getBytes())
-      DatatypeConverter.printBase64Binary(hmacbytes)
+      val hmacBytes = mac.doFinal(data.getBytes())
+      DatatypeConverter.printBase64Binary(hmacBytes)
     }
 
     val encodedUri = URLEncoder.encode(targetUri.toLowerCase(), "UTF-8")
