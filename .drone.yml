@@ -1,0 +1,15 @@
+pipeline:
+  build:
+    image: quay.io/ukhomeofficedigital/scala-sbt:latest
+    commands:
+      - /root/entrypoint.sh
+      - sbt publish
+    environment:
+      - ARTIFACTORY_USERNAME=drt_ci
+    secrets:
+      - ARTIFACTORY_PASSWORD
+    when:
+      event:
+        - push
+      branch:
+        - ${DRONE_BRANCH}
