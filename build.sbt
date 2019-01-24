@@ -1,7 +1,7 @@
 
 name := "bluebus"
 
-version := "0.2-DRT-SNAPSHOT"
+version := "0.2.1-DRT-SNAPSHOT"
 
 scalaVersion := "2.11.12"
 
