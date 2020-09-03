@@ -1,6 +1,6 @@
 pipeline:
   build:
-    image: quay.io/ukhomeofficedigital/scala-sbt:latest
+    image: quay.io/ukhomeofficedigital/scala-sbt-nodejs
     commands:
       - /root/entrypoint.sh
       - sbt +publish
