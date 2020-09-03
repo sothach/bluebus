@@ -5,7 +5,7 @@ pipeline:
       - /root/entrypoint.sh
       - sbt +publish
     environment:
-      - ARTIFACTORY_USERNAME=drt_ci
+      - ARTIFACTORY_USERNAME=drt_artifactory
     secrets:
       - ARTIFACTORY_PASSWORD
     when:
