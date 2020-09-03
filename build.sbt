@@ -1,22 +1,23 @@
 
 name := "bluebus"
 
-version := "0.2.1-DRT-SNAPSHOT"
+version := "0.3.1-DRT"
 
-scalaVersion := "2.11.12"
+lazy val scala212 = "2.12.8"
+lazy val scala211 = "2.11.12"
+lazy val supportedScalaVersions = List(scala212, scala211)
 
 name := "bluebus"
 organization := "uk.gov.homeoffice"
 organizationName := "UK Home Office"
 description := "Forked from https://github.com/sothach/bluebus"
 
+crossScalaVersions := supportedScalaVersions
+
 publishTo := {
   val artifactory = "https://artifactory.digital.homeoffice.gov.uk/"
 
-  if (isSnapshot.value)
-    Some("snapshot" at artifactory + "artifactory/libs-snapshot-local")
-  else
-    Some("release" at artifactory + "artifactory/libs-release-local")
+  Some("release" at artifactory + "artifactory/libs-release")
 }
 
 libraryDependencies ++= Seq(
