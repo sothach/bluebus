@@ -1,11 +1,11 @@
 
 name := "bluebus"
 
-version := "0.3.3-DRT"
+version := "0.4.0-DRT"
 
-lazy val scala212 = "2.12.8"
+lazy val scala = "2.13.10"
 
-lazy val supportedScalaVersions = List(scala212)
+lazy val supportedScalaVersions = List(scala)
 
 name := "bluebus"
 organization := "uk.gov.homeoffice"
@@ -21,9 +21,10 @@ publishTo := {
 }
 
 libraryDependencies ++= Seq(
-  "net.databinder.dispatch" %% "dispatch-core" % "0.13.4",
+  "org.dispatchhttp" %% "dispatch-core" % "1.2.0",
   "org.scalatest" %% "scalatest" % "3.0.5" % Test,
   "org.mockito" % "mockito-all" % "2.0.2-beta" % Test,
-  "net.jadler" % "jadler-all" % "1.3.0" % Test)
+  "net.jadler" % "jadler-all" % "1.3.0" % Test
+)
 
 trapExit := false
