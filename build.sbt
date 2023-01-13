@@ -22,9 +22,9 @@ publishTo := {
 
 libraryDependencies ++= Seq(
   "org.dispatchhttp" %% "dispatch-core" % "1.2.0",
-  "org.scalatest" %% "scalatest" % "3.0.5" % Test,
   "org.mockito" % "mockito-all" % "2.0.2-beta" % Test,
-  "net.jadler" % "jadler-all" % "1.3.0" % Test
+  "net.jadler" % "jadler-all" % "1.3.0" % Test,
+  "org.scalatest" %% "scalatest" % "3.2.15" % Test,
 )
 
 trapExit := false
