@@ -14,12 +14,6 @@ description := "Forked from https://github.com/sothach/bluebus"
 
 crossScalaVersions := supportedScalaVersions
 
-publishTo := {
-  val artifactory = "https://artifactory.digital.homeoffice.gov.uk/"
-
-  Some("release" at artifactory + "artifactory/libs-release")
-}
-
 libraryDependencies ++= Seq(
   "org.dispatchhttp" %% "dispatch-core" % "1.2.0",
   "org.mockito" % "mockito-all" % "2.0.2-beta" % Test,

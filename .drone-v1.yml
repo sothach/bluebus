@@ -13,11 +13,7 @@ steps:
     image: quay.io/ukhomeofficedigital/scala-sbt-nodejs
     commands:
     - /root/entrypoint.sh
-    - sbt +publish
-    environment:
-      ARTIFACTORY_PASSWORD:
-        from_secret: ARTIFACTORY_PASSWORD
-      ARTIFACTORY_USERNAME: scala-test-token
+    - sbt +compile
     when:
       branch:
       - ${DRONE_BRANCH}
