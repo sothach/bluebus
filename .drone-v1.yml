@@ -8,7 +8,7 @@ platform:
   arch: amd64
 
 steps:
-  - name: build
+  - name: Build
     pull: if-not-exists
     image: quay.io/ukhomeofficedigital/scala-sbt-nodejs
     commands:
@@ -22,22 +22,20 @@ steps:
       event:
         - push
 
-  - name: publish
-    image: plugins/ecr
+  - name: Publish
+    pull: if-not-exists
+    image: quay.io/ukhomeofficedigital/scala-sbt-nodejs
+    commands:
+      - /root/entrypoint.sh
+      - sbt +publish
     environment:
-      AWS_REGION: eu-west-2
-    settings:
-      access_key:
-        from_secret: aws_access_key_id
-      secret_key:
-        from_secret: aws_secret_access_key
-      repo: drt/bluebus
-      registry: 340268328991.dkr.ecr.eu-west-2.amazonaws.com
-      tags:
-        - B${DRONE_BUILD_NUMBER}
+      ARTIFACTORY_PASSWORD:
+        from_secret: ARTIFACTORY_PASSWORD
+      ARTIFACTORY_USERNAME: scala-test-token
     when:
       event:
         - push
     depends_on:
-      - build
+      - Build
+
 ...
