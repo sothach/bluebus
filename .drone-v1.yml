@@ -14,12 +14,13 @@ steps:
     commands:
     - /root/entrypoint.sh
     - sbt +compile
+    environment:
+      ARTIFACTORY_PASSWORD:
+        from_secret: ARTIFACTORY_PASSWORD
+      ARTIFACTORY_USERNAME: scala-test-token
     when:
-      branch:
-      - ${DRONE_BRANCH}
       event:
-      - push
-
+        - push
 
   - name: publish
     image: plugins/ecr
