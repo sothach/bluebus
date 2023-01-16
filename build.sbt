@@ -15,6 +15,7 @@ description := "Forked from https://github.com/sothach/bluebus"
 crossScalaVersions := supportedScalaVersions
 
 resolvers += "Artifactory Release Realm" at "https://artifactory.digital.homeoffice.gov.uk/"
+resolvers += "Artifactory Release Realm" at "https://artifactory.digital.homeoffice.gov.uk/artifactory/remote-repos",
 
 libraryDependencies ++= Seq(
   "org.dispatchhttp" %% "dispatch-core" % "1.2.0",
