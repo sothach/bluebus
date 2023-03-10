@@ -6,6 +6,7 @@ version := "0.3.3-DRT"
 lazy val scala212 = "2.12.8"
 
 lazy val supportedScalaVersions = List(scala212)
+ThisBuild / scapegoatVersion := "2.1.1"
 
 name := "bluebus"
 organization := "uk.gov.homeoffice"
