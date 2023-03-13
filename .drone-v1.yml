@@ -19,7 +19,7 @@ steps:
     environment:
       ARTIFACTORY_PASSWORD:
         from_secret: ARTIFACTORY_PASSWORD
-      ARTIFACTORY_USERNAME: drt-drone-artifactory-robot
+      ARTIFACTORY_USERNAME: drt-artifactory-robot
       ENV_LOG_LEVEL: ERROR
     when:
       event:
@@ -49,7 +49,7 @@ steps:
     environment:
       ARTIFACTORY_PASSWORD:
         from_secret: ARTIFACTORY_PASSWORD
-      ARTIFACTORY_USERNAME: drt-drone-artifactory-robot
+      ARTIFACTORY_USERNAME: drt-artifactory-robot
     when:
       branch:
         - ${DRONE_BRANCH}
