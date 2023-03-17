@@ -3,18 +3,20 @@ name := "bluebus"
 
 version := "0.3.3-DRT"
 
-lazy val scala212 = "2.12.8"
+val scala212 = "2.12.8"
 
-lazy val supportedScalaVersions = List(scala212)
-ThisBuild / scapegoatVersion := "2.1.1"
+ThisBuild / scapegoatVersion := "1.4.2"
+scalaVersion := scala212
 
 name := "bluebus"
 organization := "uk.gov.homeoffice"
 organizationName := "UK Home Office"
 description := "Forked from https://github.com/sothach/bluebus"
 
-crossScalaVersions := supportedScalaVersions
+resolvers += "Artifactory Realm" at "https://artifactory.digital.homeoffice.gov.uk/"
+resolvers += "Artifactory Realm sonatype cache" at "https://artifactory.digital.homeoffice.gov.uk/artifactory/sonatype-release-cache/"
 resolvers += "Secured Central Repository" at "https://repo1.maven.org/maven2"
+credentials += Credentials(Path.userHome / ".ivy2" / ".credentials")
 
 publishTo := {
   val artifactory = "https://artifactory.digital.homeoffice.gov.uk/"
