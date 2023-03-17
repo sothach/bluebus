@@ -14,6 +14,7 @@ organizationName := "UK Home Office"
 description := "Forked from https://github.com/sothach/bluebus"
 
 crossScalaVersions := supportedScalaVersions
+resolvers += "Secured Central Repository" at "https://repo1.maven.org/maven2"
 
 publishTo := {
   val artifactory = "https://artifactory.digital.homeoffice.gov.uk/"
