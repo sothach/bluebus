@@ -3,17 +3,14 @@ name := "bluebus"
 
 ThisBuild / version := "v" + sys.env.getOrElse("DRONE_BUILD_NUMBER", sys.env.getOrElse("BUILD_ID", "DEV"))
 
-lazy val scala = "2.13.10"
+scalaVersion := "2.13.10"
 
 ThisBuild / scapegoatVersion := "2.1.1"
-lazy val supportedScalaVersions = List(scala)
 
 name := "bluebus"
 organization := "uk.gov.homeoffice"
 organizationName := "UK Home Office"
 description := "Forked from https://github.com/sothach/bluebus"
-
-crossScalaVersions := supportedScalaVersions
 
 val artifactory = "https://artifactory.digital.homeoffice.gov.uk/"
 
