@@ -5,7 +5,7 @@ import java.time.Duration
 
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
-import javax.xml.bind.DatatypeConverter
+import java.util.Base64
 
 /** Shared Access Signature (SAS) to authenticate Service Bus clients, generated from the
   * HMAC-SHA256 of a resource string, consisting of the URI of the resource that is accessed
@@ -18,7 +18,7 @@ object SASAuthFactory {
       val mac = Mac.getInstance(key.getAlgorithm)
       mac.init(key)
       val hmacBytes = mac.doFinal(data.getBytes())
-      DatatypeConverter.printBase64Binary(hmacBytes)
+      Base64.getEncoder.encodeToString(hmacBytes)
     }
 
     val encodedUri = URLEncoder.encode(targetUri.toLowerCase(), "UTF-8")

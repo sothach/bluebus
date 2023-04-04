@@ -1,22 +1,22 @@
-import java.net.URL
-
 import bluebus.client.ServiceBusClient
 import bluebus.configuration.SBusConfig
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.matchers.should.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 
-class SecureClientSpec extends FlatSpec with Matchers {
+import java.net.URL
 
-  "when the client is configured with a secure endpoint, it" should
+class SecureClientSpec extends AnyWordSpec with Matchers {
+
+  "when the client is configured with a secure endpoint, it" should {
     "return the expected endpoint" in {
-    val config = SBusConfig(
-      rootUri=new URL(s"https://localhost:443"),
-      queueName="queueName",
-      sasKeyName="RootManageSharedAccessKey",
-      sasKey="sasKey")
-    val subject = new ServiceBusClient(config)
+      val config = SBusConfig(
+        rootUri = new URL(s"https://localhost:443"),
+        queueName = "queueName",
+        sasKeyName = "RootManageSharedAccessKey",
+        sasKey = "sasKey")
+      val subject = new ServiceBusClient(config)
 
-    subject.peek
-
+      subject.peek
+    }
   }
-
 }
